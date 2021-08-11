@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"crypto/sha1"
 	"fmt"
-	"github.com/jackpal/bencode-go"
-	"github.com/kalpitpant/torrent-client/internal/p2p"
 	"math/rand"
 	"os"
+
+	"github.com/call-stack/torrent-client/internal/p2p"
+	"github.com/jackpal/bencode-go"
 )
 
 type bencodedInfo struct {
@@ -106,7 +107,7 @@ func (tf *TorrentFile) DownloadToFile() error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("-----#1", peerID)
+
 	peers, err := tf.requestPeers(peerID, PORT)
 	if err != nil {
 		return err
@@ -122,11 +123,22 @@ func (tf *TorrentFile) DownloadToFile() error {
 		Name:        tf.Name,
 	}
 
-	_, err = torrent.Download()
-	if err!=nil{
+	buf, err := torrent.Download()
+	if err != nil {
 		return err
 	}
 
+	outFile, err := os.Create("filename.iso")
+	if err != nil {
+		return err
+	}
+
+	defer outFile.Close()
+
+	_, err = outFile.Write(buf)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

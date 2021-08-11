@@ -1,7 +1,6 @@
 package handshake
 
 import (
-	"fmt"
 	"io"
 )
 
@@ -27,6 +26,7 @@ func (h *Handshake) Serialize() []byte {
 	curr += copy(buf[curr:], make([]byte, 8)) // 8 reserved bytes
 	curr += copy(buf[curr:], h.InfoHash[:])
 	curr += copy(buf[curr:], h.PeerID[:])
+
 	return buf
 }
 
@@ -37,7 +37,7 @@ func Read(r io.Reader) (*Handshake, error) {
 		return nil, err
 	}
 	pstrlen := int(lengthBuf[0])
-	fmt.Println("----values", pstrlen, lengthBuf)
+
 	if pstrlen == 0 {
 		return nil, err
 	}

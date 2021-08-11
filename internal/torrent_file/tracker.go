@@ -1,12 +1,13 @@
 package torrent_file
 
 import (
-	"github.com/jackpal/bencode-go"
-	"github.com/kalpitpant/torrent-client/internal/peers"
 	"net/http"
 	"net/url"
 	"strconv"
 	"time"
+
+	"github.com/call-stack/torrent-client/internal/peers"
+	"github.com/jackpal/bencode-go"
 )
 
 type TrackerResponse struct {

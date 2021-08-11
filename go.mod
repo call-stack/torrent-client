@@ -1,4 +1,4 @@
-module github.com/kalpitpant/torrent-client
+module github.com/call-stack/torrent-client
 
 go 1.16
 
